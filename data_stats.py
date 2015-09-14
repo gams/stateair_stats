@@ -31,8 +31,8 @@ EPA_BP = {
 DATAROOT = '_data'
 DEFAULT_CITY = 'shanghai'
 AQI_BP = EPA_BP
-START_YEAR = 2011
-END_YEAR = 2015
+START_YEAR = -1
+END_YEAR = -1
 
 
 def src_process(data, source):
@@ -69,10 +69,18 @@ counts for each AQI level.
         if match is False:
             data[monthdt]['out_of_scale'] += 1
 
+def year_range(data):
+    y_range = []
+    for date in data.keys():
+        if date.year not in y_range:
+            y_range.append(date.year)
+    y_range.sort()
+    return y_range
+
 
 def get_datasets(data):
     datasets = {}
-    for year in range(2011, 2016):
+    for year in year_range(data):
         if year not in datasets:
             datasets[year] = {
                 'months': [],
@@ -109,7 +117,7 @@ def get_datasets(data):
 def plot_stacked_bars(data, city):
     datasets = get_datasets(data)
     N = 12
-    width = 0.18
+    width = 0.9 / len(datasets.keys())
     fig, ax = plt.subplots()
     offset = 0
     for year in datasets:
@@ -142,6 +150,7 @@ def plot_stacked_bars(data, city):
 
     ax.set_xticks(np.arange(N) + 0.05 + width * 2)
     ax.set_xticklabels( ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') )
+
 
 if __name__ == '__main__':
     if os.path.isdir(DATAROOT) is False:
