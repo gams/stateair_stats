@@ -17,6 +17,21 @@ For example, the Shanghai data should be in ``_data/shanghai``
 After the source files have been downloaded, remove the comments in the first
 lines of the files.
 
+Install
+=======
+
+Get the code:
+
+.. code-block:: sh
+
+    $ git clone git@github.com:gams/stateair_stats.git
+
+Install needed packages:
+
+.. code-block:: sh
+
+    $ pip install -r requirements.txt
+
 Usage
 =====
 
